@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Collectibles/Collectible.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Collectibles/CowInteract.gd" type="Script" id=2]
+
+[node name="CowInteract" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" parent="." index="3"]
+position = Vector2( 7, 0.5 )

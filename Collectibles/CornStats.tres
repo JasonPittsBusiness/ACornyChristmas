@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Resource
+class_name CornStats
+
+var min_water = 0
+var max_water = 100
+var water = min_water setget set_water
+
+func set_water(value):
+	water = clamp(value, 0, max_water)
+"
+
+[resource]
+script = SubResource( 1 )

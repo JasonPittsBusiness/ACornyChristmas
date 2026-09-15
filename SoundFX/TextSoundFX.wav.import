@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/TextSoundFX.wav-3a04b666201129a6c6089c7d0bb42739.sample"
+
+[deps]
+
+source_file="res://SoundFX/TextSoundFX.wav"
+dest_files=[ "res://.import/TextSoundFX.wav-3a04b666201129a6c6089c7d0bb42739.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

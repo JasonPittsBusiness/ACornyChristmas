@@ -1,0 +1,139 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://NPC/NPC.tscn" type="PackedScene" id=1]
+[ext_resource path="res://World/Cow.gd" type="Script" id=2]
+[ext_resource path="res://NPC/cow.png" type="Texture" id=3]
+[ext_resource path="res://Collectibles/CowInteract.tscn" type="PackedScene" id=4]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 13, 9.25 )
+
+[sub_resource type="Animation" id=1]
+resource_name = "Down"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "LeftRight"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 3 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Up"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 14, 10.5 )
+
+[node name="Cow" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 3 )
+hframes = 4
+frame = 3
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2( 0, 6.75 )
+shape = SubResource( 6 )
+
+[node name="RightWallCheck" parent="." index="3"]
+position = Vector2( 0, 4 )
+cast_to = Vector2( 12, 0 )
+
+[node name="LeftWallCheck" parent="." index="4"]
+position = Vector2( 0, 4 )
+cast_to = Vector2( -12, 0 )
+
+[node name="UpWallCheck" parent="." index="5"]
+position = Vector2( 0, 4 )
+cast_to = Vector2( 0, -12 )
+
+[node name="DownWallCheck" parent="." index="6"]
+position = Vector2( 0, 4 )
+cast_to = Vector2( 0, 12 )
+
+[node name="AnimationPlayer" parent="." index="7"]
+anims/Down = SubResource( 1 )
+anims/Idle = SubResource( 4 )
+anims/LeftRight = SubResource( 2 )
+anims/RESET = SubResource( 5 )
+anims/Up = SubResource( 3 )
+
+[node name="SpawnerTimer" type="Timer" parent="." index="8"]
+wait_time = 3.0
+
+[node name="PoopSpawnPosition" type="Position2D" parent="." index="9"]
+position = Vector2( -18, 16 )
+
+[node name="CowInteract" parent="." index="10" instance=ExtResource( 4 )]
+
+[node name="CollisionShape2D" parent="CowInteract" index="3"]
+position = Vector2( 0, 6.5 )
+shape = SubResource( 7 )
+
+[connection signal="timeout" from="SpawnerTimer" to="." method="_on_SpawnerTimer_timeout"]
+[connection signal="food_was_eaten" from="CowInteract" to="." method="_on_CowInteract_food_was_eaten"]
+
+[editable path="CowInteract"]

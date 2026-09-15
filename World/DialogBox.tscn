@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://UI/DefaultTheme.tres" type="Theme" id=1]
+[ext_resource path="res://World/DialogBox.gd" type="Script" id=2]
+[ext_resource path="res://World/DialogBoxController.gd" type="Script" id=3]
+[ext_resource path="res://UI/gpatextbox.png" type="Texture" id=4]
+[ext_resource path="res://SoundFX/TextSoundFX.wav" type="AudioStream" id=5]
+[ext_resource path="res://SoundFX/TextSoundDoneFX.wav" type="AudioStream" id=6]
+
+[node name="DialogBox" type="Sprite"]
+pause_mode = 2
+texture = ExtResource( 4 )
+script = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.03
+autostart = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -78.0
+margin_top = -32.0
+margin_right = 128.0
+margin_bottom = 12.0
+theme = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Hello"
+text = "Hello"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -36.0
+
+[node name="TextDonePlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -30.0
+
+[connection signal="timeout" from="Timer" to="RichTextLabel" method="_on_Timer_timeout"]
+[connection signal="dialog_done" from="RichTextLabel" to="." method="_on_RichTextLabel_dialog_done"]
+[connection signal="play_sound" from="RichTextLabel" to="." method="_on_RichTextLabel_play_sound"]
+[connection signal="stop_sound" from="RichTextLabel" to="." method="_on_RichTextLabel_stop_sound"]
+[connection signal="text_done" from="RichTextLabel" to="." method="_on_RichTextLabel_text_done"]
